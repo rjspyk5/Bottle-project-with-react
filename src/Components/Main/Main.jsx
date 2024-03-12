@@ -4,7 +4,7 @@ import { Bottles } from './Bottle/Bottles'
 
 export const Main = () => {
   return (
-    <div>
+    <div className='container mx-auto'>
 <Bottles></Bottles>
     </div>
   )

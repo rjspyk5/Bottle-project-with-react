@@ -15,9 +15,11 @@ export const Bottles = () => {
     },[])
     
   return (
-    <div className='grid grid-cols-3 gap-5'>
-        {bottleData.map(({id,img,name})=>{
-           return <Bottle key={id} name={name} img={img} />
+    <div className='grid grid-cols-3 gap-5 '>
+        {bottleData.map((el)=>{
+            console.log(el);
+       const {id,img,name,price}=el;
+           return <Bottle key={id} name={name} img={img} price={price} />
         })}
         
     </div>
