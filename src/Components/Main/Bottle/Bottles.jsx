@@ -10,6 +10,7 @@ import { Iteam } from './Iteam';
 export const Bottles = () => {
   const [bottleData, setbottleData] = useState([]);
   const [productsOnCart, setproductsOnCart] = useState([]);
+  const [totalPrice, settotalPrice] = useState(0);
   // Getting all data from API
   useEffect(() => {
     const f = async () => {
@@ -19,6 +20,14 @@ export const Bottles = () => {
     };
     f();
   }, []);
+  // total calculaton
+  useEffect(() => {
+    const total =
+      productsOnCart.length &&
+      productsOnCart.reduce((acc, cur) => acc + cur.price, 0);
+    productsOnCart.length && settotalPrice(total);
+    console.log(total);
+  }, [productsOnCart]);
 
   // Getting added cart data from LocalStorage
   useEffect(() => {
@@ -34,16 +43,13 @@ export const Bottles = () => {
 
   // Add to Cart Fuction
   const handleAddToCart = bottle => {
-    setproductsOnCart([...productsOnCart, bottle]);
+    setproductsOnCart(prevProducts => [...prevProducts, bottle]);
     setDataToLocal(bottle.id);
   };
   // Remove iteam functionality
   const handleRemove = id => {
-    console.log(productsOnCart);
-    console.log(id);
     const update = productsOnCart.filter(el => el.id !== id);
     setproductsOnCart(update);
-    console.log(update);
     removeIteam(id);
   };
   return (
@@ -69,9 +75,13 @@ export const Bottles = () => {
                 <Iteam key={iDx} handleREmove={handleRemove} productInfo={el} />
               );
             })}
+            <div className='flex justify-around'>
+              <h1>Total</h1>
+              <h1>{totalPrice}</h1>
+            </div>
           </div>
         ) : (
-          <h1>You didn't add any products yet</h1>
+          <h1 className='text-center'>Your cart is empty</h1>
         )}
       </div>
     </div>
