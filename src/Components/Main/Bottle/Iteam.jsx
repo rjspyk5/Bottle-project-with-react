@@ -1,9 +1,8 @@
 import PropTypes from 'prop-types';
 
-export const Iteam = ({ productInfo: { name, price } }) => {
-  console.log(name);
+export const Iteam = ({ productInfo: { name, price, id }, handleREmove }) => {
   return (
-    <div className='flex justify-around'>
+    <div onClick={() => handleREmove(id)} className='flex justify-around'>
       <h1>{name}</h1>
       <h1>{price}</h1>
     </div>

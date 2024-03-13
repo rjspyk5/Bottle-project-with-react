@@ -33,6 +33,11 @@ export const Bottles = () => {
     setproductsOnCart([...productsOnCart, bottle]);
     setDataToLocal(bottle.id);
   };
+  const handleRemove = id => {
+    const filteredProducts = productsOnCart.filter(el => el.id === id);
+
+    setproductsOnCart(...filteredProducts);
+  };
   return (
     <div className='grid grid-cols-12'>
       <div className='grid grid-cols-3 gap-5 col-span-9'>
@@ -53,7 +58,9 @@ export const Bottles = () => {
             {productsOnCart.map((el, iDx) => {
               console.log(el);
 
-              return <Iteam key={iDx} productInfo={el} />;
+              return (
+                <Iteam key={iDx} handleREmove={handleRemove} productInfo={el} />
+              );
             })}
           </div>
         )}
