@@ -7,9 +7,8 @@ export const Bottle = ({ bottle, handleAddToCart }) => {
       <h1 className='text-center text-2xl font-bold'>{name}</h1>
       <p className='text-center'>Price: ${price}</p>
       <div className='flex justify-center pb-5'>
-        {' '}
         <button
-          onClick={() => handleAddToCart(bottle.id)}
+          onClick={() => handleAddToCart(bottle)}
           type='button'
           className='btn rounded-lg text-white text-center mx-auto bg-yellow-500 p-2'
         >

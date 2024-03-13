@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Bottle } from './Bottle';
 import { getDataFromLocal, setDataToLocal } from '../../../utilies/utilies';
+import { Iteam } from './Iteam';
 
 export const Bottles = () => {
   const [bottleData, setbottleData] = useState([]);
   const [productsOnCart, setproductsOnCart] = useState([]);
+  // Getting all data from API
   useEffect(() => {
     const f = async () => {
       const promisedData = await fetch('/bottle.json');
@@ -14,6 +16,7 @@ export const Bottles = () => {
     f();
   }, []);
 
+  // Getting added cart data from LocalStorage
   useEffect(() => {
     if (bottleData.length) {
       const data = getDataFromLocal();
@@ -21,12 +24,14 @@ export const Bottles = () => {
         const matched = bottleData.find(ele => ele.id === el);
         return matched;
       });
-      console.log(storedProducts);
+      setproductsOnCart([...storedProducts]);
     }
-  }, [productsOnCart, bottleData]);
-  const handleAddToCart = id => {
-    setproductsOnCart([...productsOnCart, id]);
-    setDataToLocal(id);
+  }, [bottleData]);
+
+  // Add to Cart Fuction
+  const handleAddToCart = bottle => {
+    setproductsOnCart([...productsOnCart, bottle]);
+    setDataToLocal(bottle.id);
   };
   return (
     <div className='grid grid-cols-12'>
@@ -37,7 +42,22 @@ export const Bottles = () => {
           );
         })}
       </div>
-      <div className='col-span-3'></div>
+      <div className='col-span-3'>
+        <h1 className='text-center text-2xl font-black'>Shopping Cart</h1>
+        {productsOnCart.length > 0 && (
+          <div className='border-b'>
+            <div className='flex justify-around'>
+              <h1>Name</h1>
+              <h1>Price</h1>
+            </div>
+            {productsOnCart.map((el, iDx) => {
+              console.log(el);
+
+              return <Iteam key={iDx} productInfo={el} />;
+            })}
+          </div>
+        )}
+      </div>
     </div>
   );
 };
