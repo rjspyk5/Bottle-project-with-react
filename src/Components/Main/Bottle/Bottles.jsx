@@ -47,8 +47,8 @@ export const Bottles = () => {
     removeIteam(id);
   };
   return (
-    <div className='grid grid-cols-12'>
-      <div className='grid grid-cols-3 gap-5 col-span-9'>
+    <div className='grid lg:grid-cols-12 grid-cols-1'>
+      <div className='grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5 col-span-9 order-2 md:order-1'>
         {bottleData.map(el => {
           return (
             <Bottle handleAddToCart={handleAddToCart} key={el.id} bottle={el} />
@@ -56,9 +56,9 @@ export const Bottles = () => {
         })}
       </div>
       {/* Shopping cart section */}
-      <div className='col-span-3'>
+      <div className='col-span-3 order-1 md:order-2'>
         <h1 className='text-center text-2xl font-black'>Shopping Cart</h1>
-        {productsOnCart.length > 0 && (
+        {productsOnCart.length > 0 ? (
           <div className='border-b'>
             <div className='flex justify-around'>
               <h1>Name</h1>
@@ -70,6 +70,8 @@ export const Bottles = () => {
               );
             })}
           </div>
+        ) : (
+          <h1>You didn't add any products yet</h1>
         )}
       </div>
     </div>
