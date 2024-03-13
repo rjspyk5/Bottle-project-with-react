@@ -1,6 +1,10 @@
 import { useEffect, useState } from 'react';
 import { Bottle } from './Bottle';
-import { getDataFromLocal, setDataToLocal } from '../../../utilies/utilies';
+import {
+  getDataFromLocal,
+  removeIteam,
+  setDataToLocal,
+} from '../../../utilies/utilies';
 import { Iteam } from './Iteam';
 
 export const Bottles = () => {
@@ -33,10 +37,14 @@ export const Bottles = () => {
     setproductsOnCart([...productsOnCart, bottle]);
     setDataToLocal(bottle.id);
   };
+  // Remove iteam functionality
   const handleRemove = id => {
-    const filteredProducts = productsOnCart.filter(el => el.id === id);
-
-    setproductsOnCart(...filteredProducts);
+    console.log(productsOnCart);
+    console.log(id);
+    const update = productsOnCart.filter(el => el.id !== id);
+    setproductsOnCart(update);
+    console.log(update);
+    removeIteam(id);
   };
   return (
     <div className='grid grid-cols-12'>
@@ -47,6 +55,7 @@ export const Bottles = () => {
           );
         })}
       </div>
+      {/* Shopping cart section */}
       <div className='col-span-3'>
         <h1 className='text-center text-2xl font-black'>Shopping Cart</h1>
         {productsOnCart.length > 0 && (
@@ -56,8 +65,6 @@ export const Bottles = () => {
               <h1>Price</h1>
             </div>
             {productsOnCart.map((el, iDx) => {
-              console.log(el);
-
               return (
                 <Iteam key={iDx} handleREmove={handleRemove} productInfo={el} />
               );

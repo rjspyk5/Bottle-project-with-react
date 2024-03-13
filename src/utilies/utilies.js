@@ -12,4 +12,11 @@ const setDataToLocal = value => {
   //  stored data
   localStorage.setItem('cart', JSON.stringify(prev));
 };
-export { getDataFromLocal, setDataToLocal };
+
+const removeIteam = id => {
+  const pre = getDataFromLocal('cart');
+  const updateProducts = pre.filter(el => el !== id);
+  localStorage.setItem('cart', JSON.stringify(updateProducts));
+};
+
+export { getDataFromLocal, setDataToLocal, removeIteam };
