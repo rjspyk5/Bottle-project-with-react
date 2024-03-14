@@ -6,6 +6,8 @@ import {
   setDataToLocal,
 } from '../../../utilies/utilies';
 import { Iteam } from './Iteam';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export const Bottles = () => {
   const [bottleData, setbottleData] = useState([]);
@@ -44,6 +46,7 @@ export const Bottles = () => {
     if (!isDuplicate) {
       setproductsOnCart(pre => [...pre, bottle]);
       setDataToLocal(bottle.id);
+      notify();
     }
   };
   // Remove iteam functionality
@@ -51,6 +54,11 @@ export const Bottles = () => {
     const update = productsOnCart.filter(el => el.id !== id);
     setproductsOnCart(update);
     removeIteam(id);
+  };
+  const notify = () => {
+    toast.success('Iteam has been added successfull', {
+      position: 'top-center',
+    });
   };
   return (
     <div className='grid lg:grid-cols-12 grid-cols-1'>
@@ -63,6 +71,14 @@ export const Bottles = () => {
       </div>
       {/* Shopping cart section */}
       <div className='col-span-3 order-1 md:order-2'>
+        <ToastContainer
+          stacked
+          position='top-center'
+          autoClose={2000}
+          closeOnClick
+          rtl={true}
+          hideProgressBar={true}
+        />
         <h1 className='text-center text-2xl font-black'>Shopping Cart</h1>
         {productsOnCart.length > 0 ? (
           <div className='border-b'>

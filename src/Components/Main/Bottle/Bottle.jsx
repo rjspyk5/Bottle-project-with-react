@@ -1,6 +1,6 @@
-import React from 'react';
 export const Bottle = ({ bottle, handleAddToCart }) => {
   const { name, img, price } = bottle;
+
   return (
     <div className=' space-y-2 border rounded-xl '>
       <img src={img} className='rounded-t-xl' alt='' />
