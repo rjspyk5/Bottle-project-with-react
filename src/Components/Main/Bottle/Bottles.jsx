@@ -47,6 +47,8 @@ export const Bottles = () => {
       setproductsOnCart(pre => [...pre, bottle]);
       setDataToLocal(bottle.id);
       notify();
+    } else {
+      errorNotify();
     }
   };
   // Remove iteam functionality
@@ -58,6 +60,13 @@ export const Bottles = () => {
   const notify = () => {
     toast.success('Iteam has been added successfull', {
       position: 'top-center',
+      theme: 'colored',
+    });
+  };
+  const errorNotify = () => {
+    toast.error('Order limit for per order is only one', {
+      position: 'top-center',
+      theme: 'colored',
     });
   };
   return (
