@@ -26,9 +26,7 @@ export const Bottles = () => {
       productsOnCart.length &&
       productsOnCart.reduce((acc, cur) => acc + cur.price, 0);
     productsOnCart.length && settotalPrice(total);
-    console.log(total);
   }, [productsOnCart]);
-
   // Getting added cart data from LocalStorage
   useEffect(() => {
     if (bottleData.length) {
@@ -40,11 +38,13 @@ export const Bottles = () => {
       setproductsOnCart([...storedProducts]);
     }
   }, [bottleData]);
-
   // Add to Cart Fuction
   const handleAddToCart = bottle => {
-    setproductsOnCart(prevProducts => [...prevProducts, bottle]);
-    setDataToLocal(bottle.id);
+    const isDuplicate = productsOnCart.find(el => el.id === bottle.id);
+    if (!isDuplicate) {
+      setproductsOnCart(pre => [...pre, bottle]);
+      setDataToLocal(bottle.id);
+    }
   };
   // Remove iteam functionality
   const handleRemove = id => {
