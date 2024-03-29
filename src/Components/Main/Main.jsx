@@ -1,11 +1,10 @@
-import React from 'react'
-import { Bottles } from './Bottle/Bottles'
-
+import React from 'react';
+import { Bottles } from './Bottle/Bottles';
 
 export const Main = () => {
   return (
-    <div > 
-   <Bottles />
+    <div>
+      <Bottles />
     </div>
-  )
-}
+  );
+};
