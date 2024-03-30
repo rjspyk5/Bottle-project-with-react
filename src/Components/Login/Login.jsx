@@ -1,6 +1,7 @@
 import { getAuth, signInWithPopup, signOut } from 'firebase/auth';
 import { app } from '../Firebase/firebase.init';
 import { GoogleAuthProvider } from 'firebase/auth';
+import { GithubAuthProvider } from 'firebase/auth';
 import { FaGoogle } from 'react-icons/fa';
 import { FaGithub } from 'react-icons/fa';
 import { useState } from 'react';
@@ -9,10 +10,16 @@ export const Login = () => {
   const [user, setuser] = useState([]);
   const auth = getAuth(app);
   const provider = new GoogleAuthProvider();
+  const providerGithub = new GithubAuthProvider();
   const handleClick = e => {
     e.preventDefault();
-    console.log('clicked');
     signInWithPopup(auth, provider)
+      .then(res => setuser(res.user))
+      .catch(er => console.log(er));
+  };
+  const handleGithubLogin = e => {
+    e.preventDefault();
+    signInWithPopup(auth, providerGithub)
       .then(res => setuser(res.user))
       .catch(er => console.log(er));
   };
@@ -21,13 +28,13 @@ export const Login = () => {
 
     signOut(auth)
       .then(() => {
-        console.log('signOut success');
+        setuser([]);
       })
       .catch(error => {
         console.log(error);
       });
   };
-  console.log(user.length);
+  console.log(user);
   return (
     <div>
       <div className='flex justify-center max-w-1/2'>
@@ -62,7 +69,10 @@ export const Login = () => {
                   <span> Login with Google </span>
                   <FaGoogle />
                 </button>
-                <button className='btn bg-gray-400 text-[white] p-1 flex items-center space-x-3 rounded-md'>
+                <button
+                  onClick={handleGithubLogin}
+                  className='btn bg-gray-400 text-[white] p-1 flex items-center space-x-3 rounded-md'
+                >
                   <span>Login with github</span> <FaGithub />
                 </button>
               </>
