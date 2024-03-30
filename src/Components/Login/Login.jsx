@@ -6,7 +6,7 @@ import { FaGithub } from 'react-icons/fa';
 import { useState } from 'react';
 
 export const Login = () => {
-  const [user, setuser] = useState({});
+  const [user, setuser] = useState([]);
   const auth = getAuth(app);
   const provider = new GoogleAuthProvider();
   const handleClick = e => {
@@ -16,7 +16,9 @@ export const Login = () => {
       .then(res => setuser(res.user))
       .catch(er => console.log(er));
   };
-  const handleSignOut = () => {
+  const handleSignOut = e => {
+    e.preventDefault();
+
     signOut(auth)
       .then(() => {
         console.log('signOut success');
@@ -25,7 +27,7 @@ export const Login = () => {
         console.log(error);
       });
   };
-  console.log(user);
+  console.log(user.length);
   return (
     <div>
       <div className='flex justify-center max-w-1/2'>
@@ -51,7 +53,7 @@ export const Login = () => {
             value='Submit'
           />
           <div className='flex space-x-4'>
-            {user ? (
+            {user.length <= 0 ? (
               <>
                 <button
                   onClick={handleClick}
@@ -72,12 +74,6 @@ export const Login = () => {
                 SignOut
               </button>
             )}
-            <button
-              onClick={handleSignOut}
-              className='btn bg-gray-400 text-[white] p-1 flex items-center space-x-3 rounded-md'
-            >
-              SignOut
-            </button>
           </div>
         </form>
       </div>
